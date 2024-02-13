@@ -14,11 +14,8 @@ class Main {
             judges[i][1] = st.nextToken();
         }
         
-        Arrays.sort(judges, new Comparator<String[]>() {
-            @Override
-            public int compare(String[] s1, String[] s2) {
+        Arrays.sort(judges, (s1, s2) -> {
                 return Integer.parseInt(s1[0]) - Integer.parseInt(s2[0]);
-            }
         });
         
         StringBuilder sb = new StringBuilder();
