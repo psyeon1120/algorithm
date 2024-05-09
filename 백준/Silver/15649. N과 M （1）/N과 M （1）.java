@@ -1,42 +1,38 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-   static int N;
-   static int M;
-   static int[] arr;
-   static boolean[] check;
-
-   public static void main(String[] args) throws IOException {
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-      StringTokenizer st = new StringTokenizer(br.readLine());
-
-      N = Integer.parseInt(st.nextToken());
-      M = Integer.parseInt(st.nextToken());
-      arr = new int[M+1];
-      check = new boolean[N+1];
-
-      dfs(0);
-   }
-
-   public static void dfs(int depth) {
-      if (depth == M) {
-         for (int i = 0; i < M; i++) {
-            System.out.print(arr[i] + " ");
-         }
-         System.out.println();
-         return;
-      }
-
-      for (int i = 0; i < N; i++) {
-         if (!check[i]) {
-            check[i] = true;
-            arr[depth] = i + 1;
-            dfs(depth + 1);
-            check[i] = false;
-         }
-      }
-   }
+class Main {
+    static int N, M;
+    static int[] arr;
+    static boolean[] visited;
+    
+    public static void dfs(int num) {
+        if(num == M) {
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i<M;i++)
+                sb.append(arr[i] + " ");
+            System.out.println(sb);
+        } else {
+            for(int i=0;i<N;i++) {
+                if(!visited[i]) {
+                    visited[i] = true;
+                    arr[num] = i + 1;
+                    dfs(num+1);
+                    visited[i] = false;
+                }
+            }
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[N];
+        visited = new boolean[N];
+        
+        dfs(0);
+    }
 }
