@@ -1,51 +1,39 @@
-import java.util.*;
 import java.io.*;
 
-class Main {
-    static int N;
-    static boolean[][] board;
-    static int result = 0;
-    
+public class Main {
+    static  int[] board;
+    static int N, result = 0;
+
     public static void dfs(int depth) {
-        if(depth == N) {
+        if (depth == N) {
             result++;
             return;
         }
         
-        for(int i=0;i<N;i++) {
-            if(isPossible(depth, i)) {
-                board[depth][i] = true;
+        for (int i=0;i<N;i++) {
+            board[depth] = i;
+            if (isPossible(depth))
                 dfs(depth+1);
-                board[depth][i] = false;
-            }
         }
     }
-    
-    public static boolean isPossible(int x, int y) {
-        int plusIdx = y+1;
-        int minusIdx = y-1;
-        for(int i=x-1;i>=0;i--) {
-            // 열 판단
-            if(board[i][y]) return false;
-            
-            // 대각선 판단
-            if(plusIdx<N && board[i][plusIdx]) return false;
-            else plusIdx++;
-            
-            if(minusIdx>=0 && board[i][minusIdx]) return false;
-            else minusIdx--;
+
+    public static boolean isPossible(int num) {
+        for (int i=0; i<num;i++) {
+            if (board[i]==board[num]) return false;
+            else if (Math.abs(board[i]-board[num]) == Math.abs(i-num))
+                return false;
         }
         return true;
     }
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        
-        board = new boolean[N][N];
-        
+        board = new int[N];
+
+
         dfs(0);
-        
-        System.out.print(result);
+
+        System.out.println(result);
     }
 }
